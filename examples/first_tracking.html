@@ -9,7 +9,7 @@
   <video id="myVideo" width="400" height="300" preload autoplay loop muted></video>
   <script>
   var colors = new tracking.ColorTracker(['magenta', 'cyan', 'yellow']);
-
+  console.log("Video !!! ");
   colors.on('track', function(event) {
     if (event.data.length === 0) {
       // No colors were detected in this frame.
