@@ -44,7 +44,7 @@
         context.clearRect(0, 0, canvas.width, canvas.height);
 
         event.data.forEach(function(rect) {
-          if (rect.color === 'custom') {
+          if (rect.color === 'yellow' || rect.color === 'purple' || rect.color === 'blue') {
             rect.color = tracker.customColor;
           }
 
