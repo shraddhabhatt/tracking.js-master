@@ -2,60 +2,43 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>tracking.js - color with video</title>
+  <title>tracking.js - color with camera</title>
   <link rel="stylesheet" href="assets/demo.css">
 
   <script src="../build/tracking-min.js"></script>
-   <script src="../node_modules/dat.gui/build/dat.gui.min.js"></script>
+  <script src="../node_modules/dat.gui/build/dat.gui.min.js"></script>
   <script src="assets/stats.min.js"></script>
   <script src="assets/color_camera_gui.js"></script>
 
   <style>
-  .demo-container {
-    background-color: black;
-  }
-
   video, canvas {
+    margin-left: 100px;
+    margin-top: 35px;
     position: absolute;
   }
   </style>
 </head>
 <body>
   <div class="demo-title">
-    <p><a href="http://trackingjs.com" target="_parent">tracking.js</a> － detect certain colors in a video</p>
+    <p><a href="http://trackingjs.com" target="_parent">tracking.js</a> － choose the colors you want to detect through the controls on the right</p>
   </div>
 
   <div class="demo-frame">
     <div class="demo-container">
-      <div id="rectangle"></div>
-      <video id="video" width="800" height="530" preload autoplay loop muted controls>
-        <source src="assets/minions.mp4" type="video/mp4">
-        <source src="assets/minions.ogv" type="video/ogg">
-      </video>
-      <canvas id="canvas" width="800" height="500"></canvas>
+      <video id="video" width="600" height="450" preload autoplay loop muted controls></video>
+      <canvas id="canvas" width="600" height="450"></canvas>
     </div>
   </div>
 
   <script>
     window.onload = function() {
+      var video = document.getElementById('video');
       var canvas = document.getElementById('canvas');
       var context = canvas.getContext('2d');
 
-      tracking.ColorTracker.registerColor('purple', function(r, g, b) {
-        var dx = r - 120;
-        var dy = g - 60;
-        var dz = b - 210;
+      var tracker = new tracking.ColorTracker();
 
-        if ((b - g) >= 100 && (r - g) >= 60) {
-          return true;
-        }
-        return dx * dx + dy * dy + dz * dz < 3500;
-      });
-
-      var tracker = new tracking.ColorTracker(['yellow', 'purple']);
-      tracker.setMinDimension(5);
-
-      tracking.track('#video', tracker);
+      tracking.track('#video', tracker, { camera: true });
 
       tracker.on('track', function(event) {
         context.clearRect(0, 0, canvas.width, canvas.height);
@@ -74,9 +57,8 @@
         });
       });
 
-      initGUIControllers(tracker);
+     initGUIControllers(tracker);
     };
-  tracking.track('#myVideo', colors,{ camera: true });
   </script>
 
 </body>
